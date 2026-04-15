@@ -1,20 +1,63 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar">
+    <ion-title class="title-bold"><span class="title-bold">To-Do Accenture</span></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" class="ion-padding custom-background">
+  <div class="header-section ion-margin-bottom">
+    <h1 class="greeting">Hola! 👋</h1>
+    <p class="subtitle">¿Qué necesitas hacer hoy?</p>
   </div>
+
+  <div class="input-section">
+    <ion-item lines="none" class="input-item">
+      <ion-icon name="add-circle-outline" slot="start" color="medium"></ion-icon>
+      <ion-input [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()"
+        placeholder="Agregar una nueva tarea..."></ion-input>
+      <ion-button fill="clear" slot="end" (click)="addTask()" [disabled]="!newTaskTitle.trim()">
+        Agregar
+      </ion-button>
+    </ion-item>
+  </div>
+
+  @if (todoService.tasks().length > 0) {
+  <div class="tasks-section">
+
+    <h2 class="section-title">Tus tareas</h2>
+    <span class="text-slide-right">Desliza para eliminar</span>
+
+    <ion-list class="task-list">
+      @for (task of todoService.tasks(); track task.id) {
+      <ion-item-sliding class="task-sliding">
+        <!-- Contenido principal de la tarea -->
+        <ion-item lines="none" class="task-item" [class.completed]="task.completed">
+          <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task.id)"
+            class="custom-checkbox"></ion-checkbox>
+          <ion-label [class.struck]="task.completed">
+            <h4>{{ task.title }}</h4>
+            <p>{{ task.createdAt | date:'shortTime' }}</p>
+          </ion-label>
+        </ion-item>
+
+        <!-- Opciones deslizando a la derecha (eliminar) -->
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteTask(task.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      }
+    </ion-list>
+  </div>
+  } @else {
+  <div class="empty-state">
+    <ion-icon name="checkmark-done-outline" color="medium" size="large"></ion-icon>
+    <h3>Todo listo!</h3>
+    <p>No tienes tareas pendientes. ¡Disfruta tu día o agrega una nueva tarea arriba!</p>
+  </div>
+  }
+
+
 </ion-content>

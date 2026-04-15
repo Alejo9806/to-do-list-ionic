@@ -1,7 +1,8 @@
 {
   "name": "prueba-to-do-list",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
