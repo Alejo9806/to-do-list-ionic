@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AlertController, ActionSheetController } from '@ionic/angular';
 import { TodoService } from '../services/todo.service';
 import { Category } from '../models/category.model';
+import { FeatureFlagService } from '../services/feature-flag.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,23 @@ import { Category } from '../models/category.model';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
   public todoService = inject(TodoService);
   private alertCtrl = inject(AlertController);
   private actionSheetCtrl = inject(ActionSheetController);
+  private featureFlagService = inject(FeatureFlagService);
 
   public newTaskTitle: string = '';
   public newTaskCategoryId: string | null = null;
+
+  public change_banner = false;
+
+  async ngOnInit() {
+    this.change_banner =
+      this.featureFlagService.isFeatureEnabled('change_banner');
+
+    console.log(this.change_banner);
+  }
 
   addTask() {
     this.todoService.addTask(this.newTaskTitle, this.newTaskCategoryId);

@@ -1,6 +1,7 @@
+@if (change_banner) {
 <ion-header class="ion-no-border">
   <ion-toolbar class="main-toolbar">
-    <ion-title class="title-bold"><span class="title-bold">To-Do Accenture</span></ion-title>
+    <ion-title class="title-bold"><span class="title-bold">To-Do List</span></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="manageCategories()" class="manage-cat-btn">
         <ion-icon slot="icon-only" name="folder-outline"></ion-icon>
@@ -8,6 +9,18 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+} @else {
+<ion-header class="ion-no-border">
+  <ion-toolbar class="main-toolbar-test">
+    <ion-title class="title-bold-test"><span class="title-bold">To-Do Test</span></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="manageCategories()" class="manage-cat-btn">
+        <ion-icon slot="icon-only" name="folder-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+}
 
 
 <ion-content [fullscreen]="true" class="ion-padding custom-background">
