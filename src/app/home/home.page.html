@@ -71,33 +71,33 @@
     </div>
 
     <ion-list class="task-list">
-      @for (task of todoService.tasks(); track task.id) {
-      <ion-item-sliding class="task-sliding">
-        <!-- Contenido principal de la tarea -->
-        <ion-item lines="none" class="task-item" [class.completed]="task.completed">
-          <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task.id)"
-            class="custom-checkbox"></ion-checkbox>
-          <ion-label [class.struck]="task.completed">
-            <h4>{{ task.title }}</h4>
-            <p>
-              {{ task.createdAt | date:'shortTime' }}
-              @if (task.categoryId) {
-              <span class="task-cat-badge">&bull; {{ getTaskCategoryName(task.categoryId) }}</span>
-              } @else {
-              <span class="task-cat-badge">&bull; Sin categoría</span>
-              }
-            </p>
-          </ion-label>
-        </ion-item>
+      <cdk-virtual-scroll-viewport itemSize="65" minBufferPx="900" maxBufferPx="1350" class="virtual-scroll-viewport">
+        <ion-item-sliding class="task-sliding" *cdkVirtualFor="let task of todoService.tasks(); trackBy: trackById">
+          <!-- Contenido principal de la tarea -->
+          <ion-item lines="none" class="task-item" [class.completed]="task.completed">
+            <ion-checkbox slot="start" [checked]="task.completed" (ionChange)="toggleTask(task.id)"
+              class="custom-checkbox"></ion-checkbox>
+            <ion-label [class.struck]="task.completed">
+              <h4>{{ task.title }}</h4>
+              <p>
+                {{ task.createdAt | date:'shortTime' }}
+                @if (task.categoryId) {
+                <span class="task-cat-badge">&bull; {{ getTaskCategoryName(task.categoryId) }}</span>
+                } @else {
+                <span class="task-cat-badge">&bull; Sin categoría</span>
+                }
+              </p>
+            </ion-label>
+          </ion-item>
 
-        <!-- Opciones deslizando a la derecha (eliminar) -->
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteTask(task.id)">
-            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-      }
+          <!-- Opciones deslizando a la derecha (eliminar) -->
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="deleteTask(task.id)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </cdk-virtual-scroll-viewport>
     </ion-list>
   </div>
   } @else {

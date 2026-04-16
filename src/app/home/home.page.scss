@@ -131,6 +131,17 @@
     overflow: hidden;
   }
 
+  .virtual-scroll-viewport {
+    height: 55vh;
+    width: 100%;
+    
+    // Hide native scrollbar since it's an app
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .text-slide-right {
     color: #a0a5ba;
     font-size: 0.85rem;
@@ -259,6 +270,8 @@
 
   ion-chip {
     margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
     font-weight: 500;
     font-size: 0.9rem;
     padding: 0 16px;

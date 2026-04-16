@@ -42,6 +42,10 @@ export class HomePage {
     return cat ? cat.name : '';
   }
 
+  trackById(index: number, item: any): string {
+    return item.id;
+  }
+
   async manageCategories() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Gestionar Categorías',
