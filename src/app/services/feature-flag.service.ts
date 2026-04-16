@@ -17,6 +17,10 @@ export class FeatureFlagService {
     const app = initializeApp(environment.firebase);
     this.remoteConfig = getRemoteConfig(app);
 
+    this.remoteConfig.defaultConfig = {
+      change_banner: false,
+    };
+
     this.remoteConfig.settings.minimumFetchIntervalMillis = 60000;
   }
 
