@@ -44,8 +44,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -86,13 +86,13 @@
           "defaultConfiguration": "development"
         },
         "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
+          "builder": "@ionic/cordova-builders:cordova-build",
           "options": {
             "browserTarget": "app:build"
           }
         },
         "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "builder": "@ionic/cordova-builders:cordova-serve",
           "options": {
             "cordovaBuildTarget": "app:ionic-cordova-build",
             "devServerTarget": "app:serve"

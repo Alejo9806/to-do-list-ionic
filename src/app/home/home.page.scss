@@ -37,12 +37,11 @@
 .input-section {
   margin-bottom: 25px;
 
-  .input-item {
-    --background: white;
-    color:#7e57c2;
-    --padding-start: 15px;
+  .input-card {
+    background: white;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(76, 41, 209, 0.08);
+    padding: 4px;
     transition: all 0.3s ease;
     
     &:focus-within {
@@ -50,15 +49,64 @@
       box-shadow: 0 12px 32px rgba(76, 41, 209, 0.15);
     }
 
-    ion-input {
-      font-weight: 500;
-      --padding-bottom: 12px;
-      --padding-top: 12px;
+    .input-item {
+      --background: transparent;
+      --padding-start: 10px;
+      
+      ion-icon {
+        color: #7e57c2;
+      }
+      
+      ion-input {
+        font-weight: 500;
+        color: #7e57c2;
+        --padding-bottom: 12px;
+        --padding-top: 12px;
+      }
     }
-    
-    ion-button {
-      font-weight: 700;
-      color: #7e57c2;
+
+    .input-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0px 10px 8px 15px;
+
+      .cat-select {
+        display: flex;
+        align-items: center;
+        background: #f4f6fa;
+        border-radius: 12px;
+        padding: 4px 10px;
+        
+        ion-icon {
+          font-size: 16px;
+          margin-right: 4px;
+        }
+
+        .custom-select {
+          --placeholder-color: #7e57c2;
+          --placeholder-opacity: 1;
+          color: #4c29d1;
+          font-weight: 600;
+          font-size: 0.85rem;
+          margin: 0;
+          max-width: none;
+          min-width: unset;
+          
+          &::part(icon) {
+            color: #4c29d1;
+            opacity: 0.8;
+          }
+        }
+      }
+
+      .add-btn {
+        margin: 0;
+        font-weight: 700;
+        --box-shadow: 0 4px 12px rgba(76, 41, 209, 0.2);
+        --background: linear-gradient(135deg, #634DC4 0%, #a57aef 100%);
+          color: white;
+      }
     }
   }
 }
@@ -143,10 +191,19 @@
     p {
       color: #a0a5ba;
       font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task-cat-badge {
+      font-weight: 600;
+      color: #7e57c2;
+      margin-left: 6px;
+      font-size: 0.8rem;
     }
 
     .struck {
-      h3 {
+      h4 {
         text-decoration: line-through;
         color: #a0a5ba;
       }
@@ -179,6 +236,58 @@
     font-weight: 500;
     line-height: 1.5;
   }
+}
+
+// ------ CATEGORY STYLES ------
+
+.manage-cat-btn {
+  --color: white;
+  margin-right: 5px;
+}
+
+.category-filters-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 4px 5px;
+  gap: 8px;
+  
+  // Hide scrollbar but keep functionality
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ion-chip {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0 16px;
+    transition: all 0.2s ease;
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.custom-select {
+  --placeholder-color: #a0a5ba;
+  --placeholder-opacity: 1;
+  color: #4c29d1;
+  font-weight: 600;
+  max-width: 100px;
+  min-width: 80px;
+  margin-right: 10px;
+  
+  &::part(icon) {
+    color: #4c29d1;
+    opacity: 0.8;
+  }
+}
+
+.alert-danger-text {
+  color: var(--ion-color-danger, #eb445a) !important;
+  font-weight: 600;
 }
 
 @keyframes fadeIn {

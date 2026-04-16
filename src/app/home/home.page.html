@@ -1,6 +1,11 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="main-toolbar">
     <ion-title class="title-bold"><span class="title-bold">To-Do Accenture</span></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="manageCategories()" class="manage-cat-btn">
+        <ion-icon slot="icon-only" name="folder-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,22 +16,59 @@
     <p class="subtitle">¿Qué necesitas hacer hoy?</p>
   </div>
 
+  @if (todoService.categories().length > 0) {
+  <div class="category-filters-container ion-margin-bottom">
+    <ion-chip [color]="todoService.selectedCategoryId() === null ? 'primary' : 'medium'"
+      [outline]="todoService.selectedCategoryId() !== null" (click)="setFilter(null)">
+      <ion-label>Todas</ion-label>
+    </ion-chip>
+    @for (cat of todoService.categories(); track cat.id) {
+    <ion-chip [color]="todoService.selectedCategoryId() === cat.id ? 'primary' : 'medium'"
+      [outline]="todoService.selectedCategoryId() !== cat.id" (click)="setFilter(cat.id)">
+      <ion-label>{{ cat.name }}</ion-label>
+    </ion-chip>
+    }
+  </div>
+  }
+
   <div class="input-section">
-    <ion-item lines="none" class="input-item">
-      <ion-icon name="add-circle-outline" slot="start" color="medium"></ion-icon>
-      <ion-input [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()"
-        placeholder="Agregar una nueva tarea..."></ion-input>
-      <ion-button fill="clear" slot="end" (click)="addTask()" [disabled]="!newTaskTitle.trim()">
-        Agregar
-      </ion-button>
-    </ion-item>
+    <div class="input-card">
+      <ion-item lines="none" class="input-item">
+        <ion-icon name="create-outline" slot="start" color="medium"></ion-icon>
+        <ion-input [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()"
+          placeholder="Agregar una nueva tarea..."></ion-input>
+      </ion-item>
+
+      <div class="input-actions">
+        <div>
+          @if (todoService.categories().length > 0) {
+          <div class="cat-select">
+            <ion-icon name="folder-outline" color="primary"></ion-icon>
+            <ion-select [(ngModel)]="newTaskCategoryId" placeholder="Categoría..." interface="popover"
+              toggleIcon="caret-down-sharp" class="custom-select">
+              <ion-select-option [value]="null">Sin categoría</ion-select-option>
+              @for (cat of todoService.categories(); track cat.id) {
+              <ion-select-option [value]="cat.id">{{ cat.name }}</ion-select-option>
+              }
+            </ion-select>
+          </div>
+          }
+        </div>
+
+        <ion-button shape="round" (click)="addTask()" [disabled]="!newTaskTitle.trim()" class="add-btn">
+          Agregar
+        </ion-button>
+      </div>
+    </div>
   </div>
 
   @if (todoService.tasks().length > 0) {
   <div class="tasks-section">
 
-    <h2 class="section-title">Tus tareas</h2>
-    <span class="text-slide-right">Desliza para eliminar</span>
+    <div class="tasks-header">
+      <h2 class="section-title">Tus tareas</h2>
+      <span class="text-slide-right">Desliza para eliminar</span>
+    </div>
 
     <ion-list class="task-list">
       @for (task of todoService.tasks(); track task.id) {
@@ -37,7 +79,14 @@
             class="custom-checkbox"></ion-checkbox>
           <ion-label [class.struck]="task.completed">
             <h4>{{ task.title }}</h4>
-            <p>{{ task.createdAt | date:'shortTime' }}</p>
+            <p>
+              {{ task.createdAt | date:'shortTime' }}
+              @if (task.categoryId) {
+              <span class="task-cat-badge">&bull; {{ getTaskCategoryName(task.categoryId) }}</span>
+              } @else {
+              <span class="task-cat-badge">&bull; Sin categoría</span>
+              }
+            </p>
           </ion-label>
         </ion-item>
 
@@ -55,7 +104,7 @@
   <div class="empty-state">
     <ion-icon name="checkmark-done-outline" color="medium" size="large"></ion-icon>
     <h3>Todo listo!</h3>
-    <p>No tienes tareas pendientes. ¡Disfruta tu día o agrega una nueva tarea arriba!</p>
+    <p>No tienes tareas pendientes en esta vista. ¡Disfruta tu día o agrega una nueva tarea arriba!</p>
   </div>
   }
 
