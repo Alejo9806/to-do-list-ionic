@@ -21,7 +21,7 @@ export class FeatureFlagService {
       change_banner: false,
     };
 
-    this.remoteConfig.settings.minimumFetchIntervalMillis = 60000;
+    this.remoteConfig.settings.minimumFetchIntervalMillis = 1000;
   }
 
   async loadConfig() {

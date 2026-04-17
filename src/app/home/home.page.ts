@@ -1,5 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AlertController, ActionSheetController } from '@ionic/angular';
+import {
+  AlertController,
+  ActionSheetController,
+  RefresherCustomEvent,
+} from '@ionic/angular';
 import { TodoService } from '../services/todo.service';
 import { Category } from '../models/category.model';
 import { FeatureFlagService } from '../services/feature-flag.service';
@@ -21,11 +25,17 @@ export class HomePage implements OnInit {
 
   public change_banner = false;
 
+  handleRefresh(event: RefresherCustomEvent) {
+    this.ngOnInit();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
   async ngOnInit() {
+    await this.featureFlagService.loadConfig();
     this.change_banner =
       this.featureFlagService.isFeatureEnabled('change_banner');
-
-    console.log(this.change_banner);
   }
 
   addTask() {
