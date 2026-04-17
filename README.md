@@ -111,6 +111,25 @@ Se integró **Firebase Remote Config** para permitir el control de funcionalidad
 
 ---
 
+## 📝 Reflexión sobre el Desarrollo
+
+### 1. ¿Cuáles fueron los principales desafíos que enfrentaste al implementar las nuevas funcionalidades?
+- **Gestión de Estado Reactivo:** Asegurar que el filtrado por categorías fuera instantáneo y eficiente. Se resolvió usando **Angular Signals** y `computed`, permitiendo una lógica declarativa y automática.
+- **UX Nativa:** Implementar la gestión de categorías mediante `ActionSheetController` y `AlertController` para mantener una experiencia fluida y móvil, evitando formularios web complejos.
+- **Consistencia de Datos:** Manejar la persistencia en `localStorage` asegurando que las tareas no quedaran sin la categoría asignada al editar o eliminar categorías.
+
+### 2. ¿Qué técnicas de optimización de rendimiento aplicaste y por qué?
+- **Virtual Scrolling (Angular CDK):** Se implementó para manejar listas masivas de tareas. Solo se renderizan los elementos visibles en pantalla, reduciendo drásticamente el uso de memoria.
+- **Angular Signals:** Permiten una detección de cambios granular, evitando ciclos innecesarios de revisión en todo el árbol de componentes (comparado con la detección de cambios tradicional de Angular).
+- **Lazy Loading:** El proyecto está estructurado para cargar el módulo `Home` de forma diferida. Esto significa que el código de la gestión de tareas solo se descarga cuando el usuario entra en esa sección, optimizando el tiempo de "Primer Pintado" de la aplicación al iniciar.
+
+### 3. ¿Cómo aseguraste la calidad y mantenibilidad del código?
+- **Arquitectura desacoplada:** Separé completamente la lógica de negocio de la lógica de presentación. Todo el manejo de datos (CRUD) reside en TodoService. Esto facilita la mantenibilidad: si mañana decidimos cambiar localStorage por una base de datos real (como Firebase), solo hay que tocar el servicio; el componente de la vista seguirá funcionando igual.
+- **Tipado Estricto:** Uso de interfaces TypeScript (`Task`, `Category`) para garantizar la integridad de los datos y facilitar el refactor.
+
+
+---
+
 ## 📂 Estructura del Proyecto
 
 - `src/app/services`: Lógica de negocio (Tasks, Categories, Feature Flags).
