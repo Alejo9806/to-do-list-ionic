@@ -12,6 +12,15 @@ Una aplicación móvil moderna y optimizada desarrollada con **Ionic** y **Angul
 
 ---
 
+## 📥 Descarga la Aplicación (Android)
+
+Puedes probar la aplicación directamente instalando el archivo APK en tu dispositivo Android:
+
+[**📲 Descargar APK (Debug)**](app-debug.apk)
+
+---
+
+
 ## 🛠️ Tecnologías y Versiones
 
 La aplicación utiliza un stack tecnológico para garantizar estabilidad y velocidad:
